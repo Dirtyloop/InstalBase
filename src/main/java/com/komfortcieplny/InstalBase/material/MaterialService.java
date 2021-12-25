@@ -32,6 +32,6 @@ public class MaterialService {
     }
 
     public Material findMaterial(Long id) {
-        return materialRepository.findById(id).orElseThrow(() -> new MaterialNotFoundException("Material by id: " + id + " was not found"));
+        return materialRepository.findById(id).orElseThrow(() -> new MaterialNotFoundException(String.format("Material by id: %s was not found", id)));
     }
 }

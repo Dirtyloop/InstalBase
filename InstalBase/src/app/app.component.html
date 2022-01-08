@@ -1,0 +1,240 @@
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+<div class="container" id="main-container">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">INSTALBASE by Dirtyloop
+              <div class="card-menu">
+              <div class="Buttons-container">
+                <button type="button" class="Btns" (click)="ngOnInit()"><h3 class="cardTitle">WAREHOUSE MANAGER v.0.2 </h3></button> 
+              </div>
+              <div class="Buttons-container">
+                <h4><button type="button" class="Btns" (click)="onOpenModal(null!, 'add')">ADD NEW</button></h4>
+              </div>
+              <div class="Buttons-container">
+                <h4><button type="button" class="Btns" (click)="xlsReport()">XLS LIST</button></h4>
+              </div>
+              <div class="Buttons-container">
+                <h4><button type="button" class="Btns" (click)="printReport()">PRINT LIST</button></h4>
+              </div>
+              <div class="search-container">
+                <form>
+                  <label for="inp" class="inp">
+                    <input type="search" id="inp" (ngModelChange)="searchMaterials(key.value)" #key="ngModel" ngModel name="key" placeholder="&nbsp;">
+                    <span class="label">Search materials</span>
+                    <span class="focus-bg"></span>
+                  </label>
+                </form>
+              </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table no-wrap user-table mb-0" id="materialList">
+                  <thead>
+                    <tr>
+                      <!--<th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>-->
+                      <th scope="col" class="border-0 text-uppercase font-medium">Name 
+                      <button (click)="onSortUpByName()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-up"></i></button>
+                      <button (click)="onSortDownByName()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-down"></i></button></th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Type</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Quantity</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Price
+                      <button (click)="onSortUpByPrice()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-up"></i></button>
+                      <button (click)="onSortDownByPrice()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-down"></i></button></th>
+                    
+                      <th scope="col" class="border-0 text-uppercase font-medium">Amount</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let material of materials">
+                      <!--<td class="pl-4">{{material?.id}}</td>-->
+                      <td>
+                          <h5 class="font-medium mb-0">{{material?.name}}</h5>
+                          <span class="text-muted"></span>
+                      </td>
+                      <td>
+                          <span class="text-muted">{{material?.description}}</span><br>
+                          <span class="text-muted"></span>
+                      </td>
+                      <td>
+                          <span class="text-muted">{{material?.quantity}} {{material?.unit}}</span><br>
+                          <span class="text-muted"></span>
+                      </td>
+                      <td>
+                        <span class="text-muted">{{material?.price}} zł</span><br>
+                        <span class="text-muted"></span>
+                      </td>
+                      <td>
+                        <span class="text-muted">{{ material.quantity * material.price }} zł</span><br>
+                        <span class="text-muted"></span>
+                      </td>
+                      <td>
+                        <button (click)="onOpenModal(material, 'delete')" type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </button>
+                        <button (click)="onOpenModal(material, 'update')" type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2"><i class="fa fa-edit"></i> </button>
+                        <button (click)="onOpenModal(material, 'buy')" type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2"><i class="fa fa-plus"></i> </button>
+                        <button (click)="onBuyOneMaterial(material)" type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2"><i class="fa fa-plus-square"></i> </button>
+                        <button (click)="onUseOneMaterial(material)" type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2"><i class="fa fa-minus-square"></i> </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="materials?.length == 0">
+                      <td class="pl-4"></td>
+                      <td colspan=6>
+                          <h5 class="font-medium mb-0">There is no material in your database.</h5>
+                          <span class="text-muted">Feel free to add some.</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addMaterialModal" tabindex="-1" role="dialog" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addMaterialModalLabel">Add material</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddMaterial(addForm)">
+            
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Type</label>
+            <input type="text" ngModel name="description" class="form-control" id="type" placeholder="Type" required>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" ngModel name="quantity" class="form-control" id="quantity" placeholder="Quantity" required>
+          </div>
+          <div class="form-group">
+            <label for="unit">Unit</label>
+            <input type="text" ngModel name="unit" class="form-control" id="unit" placeholder="Unit" required>
+          </div>
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" ngModel name="price" class="form-control" id="price" placeholder="Price" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="add-material-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Add</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Modal -->
+<div class="modal fade" id="updateMaterialModal" tabindex="-1" role="dialog" aria-labelledby="updateMaterialModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateMaterialModalLabel">Edit material {{editMaterial?.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" ngModel="{{editMaterial?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name" required>
+        </div>
+        <input type="hidden" ngModel="{{editMaterial?.id}}" name="id" class="form-control" id="id" placeholder="Id">
+        <div class="form-group">
+          <label for="descriptione">Type</label>
+          <input type="text" ngModel="{{editMaterial?.description}}" name="description" class="form-control" id="type" placeholder="Type" required>
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input type="number" ngModel="{{editMaterial?.quantity}}" name="quantity" class="form-control" id="quantity" placeholder="Quantity" required>
+        </div>
+        <div class="form-group">
+          <label for="unit">Unit</label>
+          <input type="text" ngModel="{{editMaterial?.unit}}" name="unit" class="form-control" id="unit" placeholder="Unit" required>
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="text" ngModel="{{editMaterial?.price}}" name="price" class="form-control" id="price" placeholder="Price" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button (click)="onUpdateMaterial(editForm.value)" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buy Modal -->
+<div class="modal fade" id="buyMaterialModal" tabindex="-1" role="dialog" aria-labelledby="buyMaterialModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="buyMaterialModalLabel">Buy material {{buyMaterial?.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #buyForm="ngForm">
+        
+        <input type="hidden" ngModel="{{buyMaterial?.id}}" name="id" class="form-control" id="id" placeholder="Id">
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input type="number" ngModel="{{buyMaterial?.quantity}}" name="quantity" class="form-control" id="quantity" placeholder="Quantity" required>
+        </div>
+        
+        <input type="hidden" ngModel="{{buyMaterial?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name" required>
+        
+        <input type="hidden" ngModel="{{buyMaterial?.description}}" name="description" class="form-control" id="type" placeholder="Type" required>
+
+        <input type="hidden" ngModel="{{buyMaterial?.unit}}" name="unit" class="form-control" id="unit" placeholder="Unit" required>
+
+        <input type="hidden" ngModel="{{buyMaterial?.price}}" name="price" class="form-control" id="price" placeholder="Price" required>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button (click)="onUpdateMaterial(buyForm.value)" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteMaterialModal" tabindex="-1" role="dialog" aria-labelledby="deleteMaterialModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteMaterialModalLabel">Delete Material</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete material {{deleteMaterial?.name}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button (click)="onDeleteMaterial(deleteMaterial.id)" data-dismiss="modal" class="btn btn-danger">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  

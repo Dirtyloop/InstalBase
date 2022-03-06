@@ -36,13 +36,13 @@
                     <tr>
                       <!--<th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>-->
                       <th scope="col" class="border-0 text-uppercase font-medium">Name 
-                      <button (click)="onSortUpByName()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-up"></i></button>
-                      <button (click)="onSortDownByName()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-down"></i></button></th>
+                      <button (click)="onSortUpByName()" type="button" class="sortBtns"><i class="fas fa-sort-alpha-down"></i></button>
+                      <button (click)="onSortDownByName()" type="button" class="sortBtns"><i class="fas fa-sort-alpha-down-alt"></i></button></th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Type</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Quantity</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Price
-                      <button (click)="onSortUpByPrice()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-up"></i></button>
-                      <button (click)="onSortDownByPrice()" type="button" class="sortBtns"><i class="far fa-arrow-alt-circle-down"></i></button></th>
+                      <button (click)="onSortUpByPrice()" type="button" class="sortBtns"><i class="fas fa-sort-numeric-down"></i></button>
+                      <button (click)="onSortDownByPrice()" type="button" class="sortBtns"><i class="fas fa-sort-numeric-down-alt"></i></button></th>
                     
                       <th scope="col" class="border-0 text-uppercase font-medium">Amount</th>
                       <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
@@ -99,7 +99,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addMaterialModalLabel">Add material</h5>
+          <h5 class="modal-title" id="addMaterialModalLabel">Add new material</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -142,7 +142,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateMaterialModalLabel">Edit material {{editMaterial?.name}}</h5>
+        <h5 class="modal-title" id="updateMaterialModalLabel">Edit material: {{editMaterial?.name}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -185,7 +185,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="buyMaterialModalLabel">Buy material {{buyMaterial?.name}}</h5>
+        <h5 class="modal-title" id="buyMaterialModalLabel">Change quantity of {{buyMaterial?.name}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -222,17 +222,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteMaterialModalLabel">Delete Material</h5>
+        <h5 class="modal-title" id="deleteMaterialModalLabel">Delete {{deleteMaterial?.name}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete material {{deleteMaterial?.name}}?</p>
+        <p>Are you sure you want to delete {{deleteMaterial?.name}}?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button (click)="onDeleteMaterial(deleteMaterial.id)" data-dismiss="modal" class="btn btn-danger">Yes</button>
+        <button (click)="onDeleteMaterial(deleteMaterial.id)" data-dismiss="modal" class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>

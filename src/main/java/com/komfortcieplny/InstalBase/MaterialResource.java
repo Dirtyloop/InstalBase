@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/material")
+@RequestMapping("api/v1/material")
 public class MaterialResource {
     private final MaterialService materialService;
 

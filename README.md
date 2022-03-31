@@ -15,6 +15,7 @@ Tech Stack:
 - [X] CRUD API with database connection
 - [x] Frontend in Angular
 - [x] Search through database
+- [x] Sorting items by names and by price
 - [x] Export database into Excel file
 - [x] Print database
 - [ ] Basic Auth implementation

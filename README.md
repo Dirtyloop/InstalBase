@@ -2,9 +2,7 @@
 
 ### Database of installation materials for my air-conditioning company
 
-Application preview deployed on AWS Elastic Beanstalk with RDS and S3:
-
-http://instalbase-front.s3-website-us-east-1.amazonaws.com
+Application preview deployed on AWS Elastic Beanstalk with RDS and S3 (not available right now):
 
 ![InstalBase](https://github.com/Dirtyloop/InstalBase/blob/master/screenShot.png)
 
